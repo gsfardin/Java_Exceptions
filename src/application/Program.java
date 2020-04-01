@@ -21,10 +21,11 @@ public class Program {
 		System.out.print("Check-out date (dd/MM/yyyy): ");
 		Date checkOut = sdf.parse(sc.next());
 
-//		TRATAMENTO DE EXCEÇÃO - MÉTODO RUIM....
+//		TRATAMENTO DE EXCEÇÃO - MÉTODO MUITO RUIM....
 		if (!checkOut.after(checkIn)) {
 			System.out.println("Error in reservation: Check-out date must be after check-in date!");
-		} else {
+		} 
+		else {
 			Reservation reservation = new Reservation(roomNumber, checkIn, checkOut);
 			System.out.println("Reservation: " + reservation);
 
@@ -36,19 +37,17 @@ public class Program {
 			System.out.print("Check-out date (dd/MM/yyyy): ");
 			checkOut = sdf.parse(sc.next());
 
-			Date now = new Date();
-			if (checkIn.before(now) || checkOut.before(now)) {
-				System.out.println("Error in reservation: Reservation dates form update must be future date!");
-			} else {
-				if (!checkOut.after(checkIn)) {
-					System.out.println("Error in reservation: Check-out date must be after check-in date!");
-				} else {
-					reservation.updateDates(checkIn, checkOut);
-					System.out.println("Reservation: " + reservation);
-				}
+			String error = reservation.updateDates(checkIn, checkOut);
 
+//			TESTA SE HOUVE ERRO COM BASE NO RETORNO DO MÉTODO.
+			if(error != null) {
+				System.out.println(error);
+				
 			}
-
+			else {
+				System.out.println("Reservation: " + reservation);
+			}
+			
 		}
 
 		sc.close();
